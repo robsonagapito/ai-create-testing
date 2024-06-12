@@ -1,0 +1,7 @@
+requests 
+pytest 
+flask
+flask_restx
+openai
+python-dotenv
+tiktoken

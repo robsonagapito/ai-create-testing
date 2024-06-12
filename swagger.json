@@ -1,0 +1,163 @@
+{
+    "swagger": "2.0",
+    "basePath": "/",
+    "paths": {
+      "/customers/": {
+        "get": {
+          "responses": {
+            "200": {
+              "description": "Success",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Customer"
+                }
+              }
+            }
+          },
+          "summary": "Lista todos os clientes",
+          "operationId": "list_customers",
+          "parameters": [
+            {
+              "name": "X-Fields",
+              "in": "header",
+              "type": "string",
+              "format": "mask",
+              "description": "An optional fields mask"
+            }
+          ],
+          "tags": [
+            "customers"
+          ]
+        },
+        "post": {
+          "responses": {
+            "201": {
+              "description": "Success",
+              "schema": {
+                "$ref": "#/definitions/Customer"
+              }
+            }
+          },
+          "summary": "Cria um novo cliente",
+          "operationId": "create_customer",
+          "parameters": [
+            {
+              "name": "payload",
+              "required": true,
+              "in": "body",
+              "schema": {
+                "$ref": "#/definitions/Customer"
+              }
+            },
+            {
+              "name": "X-Fields",
+              "in": "header",
+              "type": "string",
+              "format": "mask",
+              "description": "An optional fields mask"
+            }
+          ],
+          "tags": [
+            "customers"
+          ]
+        }
+      },
+      "/customers/{id}": {
+        "parameters": [
+          {
+            "in": "path",
+            "description": "O identificador do cliente",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "get": {
+          "responses": {
+            "404": {
+              "description": "Cliente não encontrado"
+            },
+            "200": {
+              "description": "Success",
+              "schema": {
+                "$ref": "#/definitions/Customer"
+              }
+            }
+          },
+          "summary": "Obter um cliente pelo ID",
+          "operationId": "get_customer",
+          "parameters": [
+            {
+              "name": "X-Fields",
+              "in": "header",
+              "type": "string",
+              "format": "mask",
+              "description": "An optional fields mask"
+            }
+          ],
+          "tags": [
+            "customers"
+          ]
+        }
+      }
+    },
+    "info": {
+      "title": "Cadastro de Clientes API",
+      "version": "1.0",
+      "description": "API simples para cadastro de clientes"
+    },
+    "produces": [
+      "application/json"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "tags": [
+      {
+        "name": "customers",
+        "description": "Operações relacionadas aos clientes"
+      }
+    ],
+    "definitions": {
+      "Customer": {
+        "required": [
+          "age",
+          "cellphone",
+          "name",
+          "nickname"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "O identificador único do cliente"
+          },
+          "name": {
+            "type": "string",
+            "description": "O nome do cliente"
+          },
+          "age": {
+            "type": "integer",
+            "description": "A idade do cliente"
+          },
+          "nickname": {
+            "type": "string",
+            "description": "O apelido do cliente"
+          },
+          "cellphone": {
+            "type": "string",
+            "description": "O telefone do cliente"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "responses": {
+      "ParseError": {
+        "description": "When a mask can't be parsed"
+      },
+      "MaskError": {
+        "description": "When any error occurs on mask"
+      }
+    }
+  }
